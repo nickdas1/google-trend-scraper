@@ -14,13 +14,9 @@ const Sheet = require('./sheet');
         const searchesPerMonth = active.find('.scoreTag').first().text().split('mo')[1];
         return { keyword, description, searchesPerMonth };
     })
-    // console.log({ trends });
 
     const sheet = new Sheet();
     await sheet.load();
-
-    // add trends to only first sheet:
-    await sheet.addRows(trends);
 
     //create a new sheet for each day and add trends
 
