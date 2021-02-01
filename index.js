@@ -18,7 +18,20 @@ const Sheet = require('./sheet');
 
     const sheet = new Sheet();
     await sheet.load();
+
+    // add trends to only first sheet:
     await sheet.addRows(trends);
+
+    //create a new sheet for each day and add trends
+
+    const newSheet = await sheet.doc.addSheet(
+        {
+            title: `${Date().split('2021')[0]}2022`,
+            headerValues: ['keyword', 'description', 'searchesPerMonth']
+        }
+    )
+
+    await newSheet.addRows(trends);
 })();
 
 
