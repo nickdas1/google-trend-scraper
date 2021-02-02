@@ -22,12 +22,10 @@ const Sheet = require('./sheet');
 
     const newSheet = await sheet.doc.addSheet(
         {
-            title: `${Date().split('2021')[0]}2022`,
+            title: `${new Date().toDateString()}`,
             headerValues: ['keyword', 'description', 'searchesPerMonth']
         }
     )
 
     await newSheet.addRows(trends);
 })();
-
-
