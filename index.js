@@ -2,8 +2,8 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const Sheet = require('./sheet');
 
-(async function () {
-    const res = await fetch('https://explodingtopics.com/topics-this-month');
+async function scrapePage(i) {
+    const res = await fetch(`https://explodingtopics.com/topics-this-month?page=${i}`);
     const text = await res.text();
     const $ = await cheerio.load(text);
     const containers = $('.topicInfoContainer').toArray();
@@ -14,6 +14,19 @@ const Sheet = require('./sheet');
         const searchesPerMonth = active.find('.scoreTag').first().text().split('mo')[1];
         return { keyword, description, searchesPerMonth };
     })
+    return trends;
+}
+
+
+(async function () {
+    let i = 5;
+    let trends = [];
+    while (true) {
+        const newTrends = await scrapePage(i);
+        if (newTrends.length === 0) break;
+        trends = trends.concat(newTrends);
+        i++;
+    }
 
     const sheet = new Sheet();
     await sheet.load();
