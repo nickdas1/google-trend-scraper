@@ -19,7 +19,7 @@ async function scrapePage(i) {
 
 
 (async function () {
-    let i = 5;
+    let i = 1;
     let trends = [];
     while (true) {
         const newTrends = await scrapePage(i);
